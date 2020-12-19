@@ -1,0 +1,25 @@
+{
+  "aliveServiceApp": {
+    "aliveMessage": {
+      "home": {
+        "title": "Alive Messages",
+        "createLabel": "Alive Message erstellen",
+        "createOrEditLabel": "Alive Message erstellen oder bearbeiten",
+        "notFound": "No Alive Messages found"
+      },
+      "created": "Alive Message erstellt mit ID {{ param }}",
+      "updated": "Alive Message aktualisiert mit ID {{ param }}",
+      "deleted": "Alive Message gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Alive Message {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Alive Message"
+      },
+      "sendtime": "Sendtime",
+      "receivetime": "Receivetime",
+      "retrycount": "Retrycount",
+      "user": "User"
+    }
+  }
+}

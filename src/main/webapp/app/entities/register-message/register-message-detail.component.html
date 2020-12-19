@@ -1,0 +1,42 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="registerMessage">
+            <h2><span jhiTranslate="aliveServiceApp.registerMessage.detail.title">Register Message</span> {{ registerMessage.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="aliveServiceApp.registerMessage.sendtime">Sendtime</span></dt>
+                <dd>
+                    <span>{{ registerMessage.sendtime }}</span>
+                </dd>
+                <dt><span jhiTranslate="aliveServiceApp.registerMessage.receivetime">Receivetime</span></dt>
+                <dd>
+                    <span>{{ registerMessage.receivetime }}</span>
+                </dd>
+                <dt><span jhiTranslate="aliveServiceApp.registerMessage.retrycount">Retrycount</span></dt>
+                <dd>
+                    <span>{{ registerMessage.retrycount }}</span>
+                </dd>
+                <dt><span jhiTranslate="aliveServiceApp.registerMessage.user">User</span></dt>
+                <dd>
+                    {{ registerMessage.user?.id }}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/register-message', registerMessage.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

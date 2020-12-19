@@ -1,0 +1,24 @@
+{
+  "aliveServiceApp": {
+    "observe": {
+      "home": {
+        "title": "Observes",
+        "createLabel": "Observe erstellen",
+        "createOrEditLabel": "Observe erstellen oder bearbeiten",
+        "notFound": "No Observes found"
+      },
+      "created": "Observe erstellt mit ID {{ param }}",
+      "updated": "Observe aktualisiert mit ID {{ param }}",
+      "deleted": "Observe gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Observe {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Observe"
+      },
+      "description": "Description",
+      "startdate": "Startdate",
+      "user": "User"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "aliveServiceApp": {
+    "registerMessage": {
+      "home": {
+        "title": "Register Messages",
+        "createLabel": "Register Message erstellen",
+        "createOrEditLabel": "Register Message erstellen oder bearbeiten",
+        "notFound": "No Register Messages found"
+      },
+      "created": "Register Message erstellt mit ID {{ param }}",
+      "updated": "Register Message aktualisiert mit ID {{ param }}",
+      "deleted": "Register Message gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Register Message {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Register Message"
+      },
+      "sendtime": "Sendtime",
+      "receivetime": "Receivetime",
+      "retrycount": "Retrycount",
+      "user": "User"
+    }
+  }
+}

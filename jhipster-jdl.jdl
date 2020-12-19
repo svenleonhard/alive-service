@@ -1,0 +1,27 @@
+entity AliveMessage {
+  sendtime ZonedDateTime
+  receivetime ZonedDateTime
+  retrycount Integer
+}
+
+entity RegisterMessage {
+  sendtime ZonedDateTime
+  receivetime ZonedDateTime
+  retrycount Integer
+}
+
+entity Observe{
+  description String
+  startdate LocalDate
+}
+
+relationship ManyToOne {
+	AliveMessage{user} to User
+	RegisterMessage{user} to User
+    Observe{user} to User
+}
+
+// Set pagination options
+paginate all with infinite-scroll
+service all with serviceImpl
+filter all
