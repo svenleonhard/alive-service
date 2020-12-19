@@ -3,6 +3,8 @@ package de.svenleonhard.alive.service.impl;
 import de.svenleonhard.alive.domain.RegisterMessage;
 import de.svenleonhard.alive.repository.RegisterMessageRepository;
 import de.svenleonhard.alive.service.RegisterMessageService;
+import de.svenleonhard.alive.service.UserService;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,14 +22,18 @@ public class RegisterMessageServiceImpl implements RegisterMessageService {
     private final Logger log = LoggerFactory.getLogger(RegisterMessageServiceImpl.class);
 
     private final RegisterMessageRepository registerMessageRepository;
+    private final UserService userService;
 
-    public RegisterMessageServiceImpl(RegisterMessageRepository registerMessageRepository) {
+    public RegisterMessageServiceImpl(RegisterMessageRepository registerMessageRepository, UserService userService) {
         this.registerMessageRepository = registerMessageRepository;
+        this.userService = userService;
     }
 
     @Override
     public RegisterMessage save(RegisterMessage registerMessage) {
         log.debug("Request to save RegisterMessage : {}", registerMessage);
+        registerMessage.setUser(userService.getUserWithAuthorities().orElseThrow(() -> new IllegalStateException("User dose not exist")));
+        registerMessage.setReceivetime(ZonedDateTime.now());
         return registerMessageRepository.save(registerMessage);
     }
 
