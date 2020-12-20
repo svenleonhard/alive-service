@@ -15,10 +15,16 @@ entity Observe{
   startdate LocalDate
 }
 
+entity DeviceNotAlive{
+  occured ZonedDateTime
+  confirmed Boolean
+}
+
 relationship ManyToOne {
 	AliveMessage{user} to User
 	RegisterMessage{user} to User
     Observe{user} to User
+    DeviceNotAlive{user} to User
 }
 
 // Set pagination options

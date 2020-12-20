@@ -1,0 +1,38 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="deviceNotAlive">
+            <h2><span jhiTranslate="aliveServiceApp.deviceNotAlive.detail.title">Device Not Alive</span> {{ deviceNotAlive.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="aliveServiceApp.deviceNotAlive.occured">Occured</span></dt>
+                <dd>
+                    <span>{{ deviceNotAlive.occured }}</span>
+                </dd>
+                <dt><span jhiTranslate="aliveServiceApp.deviceNotAlive.confirmed">Confirmed</span></dt>
+                <dd>
+                    <span>{{ deviceNotAlive.confirmed }}</span>
+                </dd>
+                <dt><span jhiTranslate="aliveServiceApp.deviceNotAlive.user">User</span></dt>
+                <dd>
+                    {{ deviceNotAlive.user?.id }}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/device-not-alive', deviceNotAlive.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -16,6 +16,10 @@ import { RouterModule } from '@angular/router';
         path: 'observe',
         loadChildren: () => import('./observe/observe.module').then(m => m.AliveServiceObserveModule),
       },
+      {
+        path: 'device-not-alive',
+        loadChildren: () => import('./device-not-alive/device-not-alive.module').then(m => m.AliveServiceDeviceNotAliveModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

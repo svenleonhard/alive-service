@@ -1,0 +1,33 @@
+{
+  "name": "DeviceNotAlive",
+  "fields": [
+    {
+      "fieldName": "occured",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "confirmed",
+      "fieldType": "Boolean"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "deviceNotAlive",
+      "relationshipName": "user",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20201220010259",
+  "entityTableName": "device_not_alive",
+  "dto": "no",
+  "pagination": "infinite-scroll",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

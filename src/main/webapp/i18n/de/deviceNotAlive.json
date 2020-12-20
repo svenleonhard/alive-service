@@ -1,0 +1,24 @@
+{
+  "aliveServiceApp": {
+    "deviceNotAlive": {
+      "home": {
+        "title": "Device Not Alives",
+        "createLabel": "Device Not Alive erstellen",
+        "createOrEditLabel": "Device Not Alive erstellen oder bearbeiten",
+        "notFound": "No Device Not Alives found"
+      },
+      "created": "Device Not Alive erstellt mit ID {{ param }}",
+      "updated": "Device Not Alive aktualisiert mit ID {{ param }}",
+      "deleted": "Device Not Alive gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Device Not Alive {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Device Not Alive"
+      },
+      "occured": "Occured",
+      "confirmed": "Confirmed",
+      "user": "User"
+    }
+  }
+}

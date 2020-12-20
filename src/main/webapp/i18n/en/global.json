@@ -10,6 +10,7 @@
         "aliveMessage": "Alive Message",
         "registerMessage": "Register Message",
         "observe": "Observe",
+        "deviceNotAlive": "Device Not Alive",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

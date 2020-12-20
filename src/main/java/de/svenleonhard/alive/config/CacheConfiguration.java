@@ -53,6 +53,7 @@ public class CacheConfiguration {
             createCache(cm, de.svenleonhard.alive.domain.AliveMessage.class.getName());
             createCache(cm, de.svenleonhard.alive.domain.RegisterMessage.class.getName());
             createCache(cm, de.svenleonhard.alive.domain.Observe.class.getName());
+            createCache(cm, de.svenleonhard.alive.domain.DeviceNotAlive.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
