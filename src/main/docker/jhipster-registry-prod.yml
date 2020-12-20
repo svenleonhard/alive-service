@@ -23,6 +23,8 @@ services:
       - VIRTUAL_PORT=8761
       - LETSENCRYPT_HOST=service-registry.7lofficial.de
       - LETSENCRYPT_EMAIL=server-administration@7lofficial.de
+      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=native
+      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config/localhost-config/
     ports:
       - 8761:8761
 networks:

@@ -8,8 +8,15 @@ jhipster:
     authentication:
       jwt:
         secret: my-secret-key-which-should-be-changed-in-production-and-be-base64-encoded
+  cors:
+    allowed-origins: '*'
+    allowed-methods: '*'
+    allowed-headers: GET, PUT, POST, DELETE, OPTIONS
+    exposed-headers: 'Authorization,Link,X-Total-Count'
+    allow-credentials: true
+    max-age: 1800
 
 eureka:
   client:
     service-url:
-      defaultZone: http://admin:${jhipster.registry.password}@jhipster-registry:8761/eureka/
+      defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/
