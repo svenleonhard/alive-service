@@ -114,7 +114,6 @@ public class AliveMessageResourceIT {
         assertThat(aliveMessageList).hasSize(databaseSizeBeforeCreate + 1);
         AliveMessage testAliveMessage = aliveMessageList.get(aliveMessageList.size() - 1);
         assertThat(testAliveMessage.getSendtime()).isEqualTo(DEFAULT_SENDTIME);
-        assertThat(testAliveMessage.getReceivetime()).isEqualTo(DEFAULT_RECEIVETIME);
         assertThat(testAliveMessage.getRetrycount()).isEqualTo(DEFAULT_RETRYCOUNT);
     }
 
@@ -595,7 +594,6 @@ public class AliveMessageResourceIT {
         assertThat(aliveMessageList).hasSize(databaseSizeBeforeUpdate);
         AliveMessage testAliveMessage = aliveMessageList.get(aliveMessageList.size() - 1);
         assertThat(testAliveMessage.getSendtime()).isEqualTo(UPDATED_SENDTIME);
-        assertThat(testAliveMessage.getReceivetime()).isEqualTo(UPDATED_RECEIVETIME);
         assertThat(testAliveMessage.getRetrycount()).isEqualTo(UPDATED_RETRYCOUNT);
     }
 

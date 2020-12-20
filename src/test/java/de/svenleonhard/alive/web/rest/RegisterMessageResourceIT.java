@@ -116,7 +116,6 @@ public class RegisterMessageResourceIT {
         assertThat(registerMessageList).hasSize(databaseSizeBeforeCreate + 1);
         RegisterMessage testRegisterMessage = registerMessageList.get(registerMessageList.size() - 1);
         assertThat(testRegisterMessage.getSendtime()).isEqualTo(DEFAULT_SENDTIME);
-        assertThat(testRegisterMessage.getReceivetime()).isEqualTo(DEFAULT_RECEIVETIME);
         assertThat(testRegisterMessage.getRetrycount()).isEqualTo(DEFAULT_RETRYCOUNT);
     }
 
@@ -599,7 +598,6 @@ public class RegisterMessageResourceIT {
         assertThat(registerMessageList).hasSize(databaseSizeBeforeUpdate);
         RegisterMessage testRegisterMessage = registerMessageList.get(registerMessageList.size() - 1);
         assertThat(testRegisterMessage.getSendtime()).isEqualTo(UPDATED_SENDTIME);
-        assertThat(testRegisterMessage.getReceivetime()).isEqualTo(UPDATED_RECEIVETIME);
         assertThat(testRegisterMessage.getRetrycount()).isEqualTo(UPDATED_RETRYCOUNT);
     }
 
