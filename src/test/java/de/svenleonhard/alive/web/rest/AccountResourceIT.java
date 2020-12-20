@@ -35,7 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link AccountResource} REST controller.
  */
 @AutoConfigureMockMvc
-@WithMockUser(value = TEST_USER_LOGIN)
+@WithMockUser(value = TEST_USER_LOGIN, roles = { "USER", "ADMIN" })
 @SpringBootTest(classes = AliveServiceApp.class)
 public class AccountResourceIT {
     static final String TEST_USER_LOGIN = "test";
