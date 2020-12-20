@@ -1,7 +1,10 @@
 package de.svenleonhard.alive.service;
 
 import de.svenleonhard.alive.domain.AliveMessage;
+import de.svenleonhard.alive.domain.DeviceNotAlive;
+import de.svenleonhard.alive.domain.User;
 import de.svenleonhard.alive.service.dto.AliveMessageCriteria;
+import de.svenleonhard.alive.service.impl.DeviceNotAliveServiceImpl;
 import de.svenleonhard.alive.service.impl.RegisterMessageServiceImpl;
 import io.github.jhipster.service.filter.LongFilter;
 import java.time.ZonedDateTime;
@@ -18,16 +21,16 @@ public class IsAliveScheduledTask {
 
     private final ObserveQueryService observeQueryService;
     private final AliveMessageQueryService aliveMessageQueryService;
-    private final UserService userService;
+    private final DeviceNotAliveServiceImpl deviceNotAliveService;
 
     public IsAliveScheduledTask(
         ObserveQueryService observeQueryService,
         AliveMessageQueryService aliveMessageQueryService,
-        UserService userService
+        DeviceNotAliveServiceImpl deviceNotAliveService
     ) {
         this.observeQueryService = observeQueryService;
         this.aliveMessageQueryService = aliveMessageQueryService;
-        this.userService = userService;
+        this.deviceNotAliveService = deviceNotAliveService;
     }
 
     @Scheduled(cron = "1 * * * * * ")
@@ -45,12 +48,21 @@ public class IsAliveScheduledTask {
                     aliveMessageList.sort(Comparator.comparing(AliveMessage::getReceivetime).reversed());
                     if (aliveMessageList.stream().findFirst().isPresent()) {
                         if (!aliveMessageList.stream().findFirst().get().getReceivetime().plusMinutes(20).isAfter(ZonedDateTime.now())) {
-                            log.error(observe.getUser().getFirstName() + " is not alive");
+                            createDeviceNotAliveFor(observe.getUser());
                         }
                     } else {
-                        log.error(observe.getUser().getFirstName() + " is not alive");
+                        createDeviceNotAliveFor(observe.getUser());
                     }
                 }
             );
+    }
+
+    public void createDeviceNotAliveFor(User user) {
+        log.error(user.getFirstName() + " is not alive");
+        DeviceNotAlive deviceNotAlive = new DeviceNotAlive();
+        deviceNotAlive.setOccured(ZonedDateTime.now());
+        deviceNotAlive.setUser(user);
+        deviceNotAlive.setConfirmed(false);
+        deviceNotAliveService.save(deviceNotAlive);
     }
 }
