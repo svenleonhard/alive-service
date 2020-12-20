@@ -18,6 +18,12 @@ services:
       - LETSENCRYPT_EMAIL=server-administration@7lofficial.de
     ports:
       - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+    networks:
+      - nginx-proxy_default
+      - default
   aliveservice-mysql:
     extends:
       file: mysql.yml
@@ -30,7 +36,6 @@ services:
       - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=git
       - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_URI=https://github.com/svenleonhard/server-config-public/
       - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_PATHS=jhipster-registry-services
-      - VIRTUAL_HOST=service-registry.7lofficial.de
-      - VIRTUAL_PORT=8761
-      - LETSENCRYPT_HOST=service-registry.7lofficial.de
-      - LETSENCRYPT_EMAIL=server-administration@7lofficial.de
+networks:
+  nginx-proxy_default:
+    external: true
