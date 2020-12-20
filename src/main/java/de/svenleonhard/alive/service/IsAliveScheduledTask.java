@@ -1,0 +1,56 @@
+package de.svenleonhard.alive.service;
+
+import de.svenleonhard.alive.domain.AliveMessage;
+import de.svenleonhard.alive.service.dto.AliveMessageCriteria;
+import de.svenleonhard.alive.service.impl.RegisterMessageServiceImpl;
+import io.github.jhipster.service.filter.LongFilter;
+import java.time.ZonedDateTime;
+import java.util.Comparator;
+import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+@Component
+public class IsAliveScheduledTask {
+    private final Logger log = LoggerFactory.getLogger(RegisterMessageServiceImpl.class);
+
+    private final ObserveQueryService observeQueryService;
+    private final AliveMessageQueryService aliveMessageQueryService;
+    private final UserService userService;
+
+    public IsAliveScheduledTask(
+        ObserveQueryService observeQueryService,
+        AliveMessageQueryService aliveMessageQueryService,
+        UserService userService
+    ) {
+        this.observeQueryService = observeQueryService;
+        this.aliveMessageQueryService = aliveMessageQueryService;
+        this.userService = userService;
+    }
+
+    @Scheduled(cron = "1 * * * * * ")
+    public void checkIsAlive() {
+        log.info("Check is alive");
+        observeQueryService
+            .findByCriteria(null)
+            .forEach(
+                observe -> {
+                    LongFilter longFilter = new LongFilter();
+                    longFilter.setEquals(observe.getUser().getId());
+                    AliveMessageCriteria aliveMessageCriteria = new AliveMessageCriteria();
+                    aliveMessageCriteria.setUserId(longFilter);
+                    List<AliveMessage> aliveMessageList = aliveMessageQueryService.findByCriteria(aliveMessageCriteria);
+                    aliveMessageList.sort(Comparator.comparing(AliveMessage::getReceivetime).reversed());
+                    if (aliveMessageList.stream().findFirst().isPresent()) {
+                        if (!aliveMessageList.stream().findFirst().get().getReceivetime().plusMinutes(20).isAfter(ZonedDateTime.now())) {
+                            log.error(observe.getUser().getFirstName() + " is not alive");
+                        }
+                    } else {
+                        log.error(observe.getUser().getFirstName() + " is not alive");
+                    }
+                }
+            );
+    }
+}
