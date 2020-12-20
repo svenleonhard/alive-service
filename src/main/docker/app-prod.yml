@@ -9,12 +9,12 @@ services:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
       - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
       - SPRING_DATASOURCE_URL=jdbc:mysql://aliveservice-mysql:3306/aliveservice?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-      - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
-      - JHIPSTER_REGISTRY_PASSWORD=${JHIPSTER_REGISTRY_PASSWORD}
-      - BASE64_SECRET=${BASE64_SECRET}
-      - VIRTUAL_HOST=alive-service.7lofficial.de
+      - JHIPSTER_SLEEP=120 # gives time for other services to boot before the application
+      - JHIPSTER_REGISTRY_PASSWORD=admin1
+      - BASE64_SECRET=o0rVA9ESSjtL3TxbYxN49wevBY/Z2ETlswu1Q8gQxoMzM4zzlQC0fyTwC3EsPtn4lU7eJEJrbKRQvCyoWWYnVg==
+      #- VIRTUAL_HOST=alive-service.7lofficial.de
       - VIRTUAL_PORT=8080
-      - LETSENCRYPT_HOST=alive-service.7lofficial.de
+      #- LETSENCRYPT_HOST=alive-service.7lofficial.de
       - LETSENCRYPT_EMAIL=server-administration@7lofficial.de
     ports:
       - 8080:8080
@@ -44,14 +44,14 @@ services:
     environment:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
       - SPRING_PROFILES_ACTIVE=prod,swagger
-      - SPRING_SECURITY_USER_PASSWORD=${SPRING_SECURITY_USER_PASSWORD}
-      - JHIPSTER_REGISTRY_PASSWORD=${JHIPSTER_REGISTRY_PASSWORD}
-      - VIRTUAL_HOST=service-registry.7lofficial.de
+      - SPRING_SECURITY_USER_PASSWORD=admin1
+      - JHIPSTER_REGISTRY_PASSWORD=admin1
+      #- VIRTUAL_HOST=service-registry.7lofficial.de
       - VIRTUAL_PORT=8761
-      - LETSENCRYPT_HOST=service-registry.7lofficial.de
+      #- LETSENCRYPT_HOST=service-registry.7lofficial.de
       - LETSENCRYPT_EMAIL=server-administration@7lofficial.de
       - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=native
-      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config/localhost-config/
+      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config/docker-config/
     ports:
       - 8761:8761
 networks:
