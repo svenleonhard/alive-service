@@ -12,9 +12,9 @@ services:
       - JHIPSTER_SLEEP=120 # gives time for other services to boot before the application
       - JHIPSTER_REGISTRY_PASSWORD=admin1
       - BASE64_SECRET=o0rVA9ESSjtL3TxbYxN49wevBY/Z2ETlswu1Q8gQxoMzM4zzlQC0fyTwC3EsPtn4lU7eJEJrbKRQvCyoWWYnVg==
-      #- VIRTUAL_HOST=alive-service.7lofficial.de
+      - VIRTUAL_HOST=alive-service.7lofficial.de
       - VIRTUAL_PORT=8080
-      #- LETSENCRYPT_HOST=alive-service.7lofficial.de
+      - LETSENCRYPT_HOST=alive-service.7lofficial.de
       - LETSENCRYPT_EMAIL=server-administration@7lofficial.de
     ports:
       - 8080:8080
@@ -46,9 +46,9 @@ services:
       - SPRING_PROFILES_ACTIVE=prod,swagger
       - SPRING_SECURITY_USER_PASSWORD=admin1
       - JHIPSTER_REGISTRY_PASSWORD=admin1
-      #- VIRTUAL_HOST=service-registry.7lofficial.de
+      - VIRTUAL_HOST=service-registry.7lofficial.de
       - VIRTUAL_PORT=8761
-      #- LETSENCRYPT_HOST=service-registry.7lofficial.de
+      - LETSENCRYPT_HOST=service-registry.7lofficial.de
       - LETSENCRYPT_EMAIL=server-administration@7lofficial.de
       - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=native
       - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config/docker-config/
