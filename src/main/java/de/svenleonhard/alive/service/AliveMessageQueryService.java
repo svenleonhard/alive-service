@@ -27,9 +27,11 @@ public class AliveMessageQueryService extends QueryService<AliveMessage> {
     private final Logger log = LoggerFactory.getLogger(AliveMessageQueryService.class);
 
     private final AliveMessageRepository aliveMessageRepository;
+    private final UserService userService;
 
-    public AliveMessageQueryService(AliveMessageRepository aliveMessageRepository) {
+    public AliveMessageQueryService(AliveMessageRepository aliveMessageRepository, UserService userService) {
         this.aliveMessageRepository = aliveMessageRepository;
+        this.userService = userService;
     }
 
     /**
@@ -40,6 +42,7 @@ public class AliveMessageQueryService extends QueryService<AliveMessage> {
     @Transactional(readOnly = true)
     public List<AliveMessage> findByCriteria(AliveMessageCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
+        criteria.setUserId(userService.makeUserIdLongFilter());
         final Specification<AliveMessage> specification = createSpecification(criteria);
         return aliveMessageRepository.findAll(specification);
     }
@@ -53,6 +56,7 @@ public class AliveMessageQueryService extends QueryService<AliveMessage> {
     @Transactional(readOnly = true)
     public Page<AliveMessage> findByCriteria(AliveMessageCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
+        criteria.setUserId(userService.makeUserIdLongFilter());
         final Specification<AliveMessage> specification = createSpecification(criteria);
         return aliveMessageRepository.findAll(specification, page);
     }
@@ -65,6 +69,7 @@ public class AliveMessageQueryService extends QueryService<AliveMessage> {
     @Transactional(readOnly = true)
     public long countByCriteria(AliveMessageCriteria criteria) {
         log.debug("count by criteria : {}", criteria);
+        criteria.setUserId(userService.makeUserIdLongFilter());
         final Specification<AliveMessage> specification = createSpecification(criteria);
         return aliveMessageRepository.count(specification);
     }

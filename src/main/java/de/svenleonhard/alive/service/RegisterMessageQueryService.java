@@ -27,9 +27,11 @@ public class RegisterMessageQueryService extends QueryService<RegisterMessage> {
     private final Logger log = LoggerFactory.getLogger(RegisterMessageQueryService.class);
 
     private final RegisterMessageRepository registerMessageRepository;
+    private final UserService userService;
 
-    public RegisterMessageQueryService(RegisterMessageRepository registerMessageRepository) {
+    public RegisterMessageQueryService(RegisterMessageRepository registerMessageRepository, UserService userService) {
         this.registerMessageRepository = registerMessageRepository;
+        this.userService = userService;
     }
 
     /**
@@ -40,6 +42,7 @@ public class RegisterMessageQueryService extends QueryService<RegisterMessage> {
     @Transactional(readOnly = true)
     public List<RegisterMessage> findByCriteria(RegisterMessageCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
+        criteria.setUserId(userService.makeUserIdLongFilter());
         final Specification<RegisterMessage> specification = createSpecification(criteria);
         return registerMessageRepository.findAll(specification);
     }
@@ -53,6 +56,7 @@ public class RegisterMessageQueryService extends QueryService<RegisterMessage> {
     @Transactional(readOnly = true)
     public Page<RegisterMessage> findByCriteria(RegisterMessageCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
+        criteria.setUserId(userService.makeUserIdLongFilter());
         final Specification<RegisterMessage> specification = createSpecification(criteria);
         return registerMessageRepository.findAll(specification, page);
     }
@@ -65,6 +69,7 @@ public class RegisterMessageQueryService extends QueryService<RegisterMessage> {
     @Transactional(readOnly = true)
     public long countByCriteria(RegisterMessageCriteria criteria) {
         log.debug("count by criteria : {}", criteria);
+        criteria.setUserId(userService.makeUserIdLongFilter());
         final Specification<RegisterMessage> specification = createSpecification(criteria);
         return registerMessageRepository.count(specification);
     }

@@ -27,9 +27,11 @@ public class DeviceNotAliveQueryService extends QueryService<DeviceNotAlive> {
     private final Logger log = LoggerFactory.getLogger(DeviceNotAliveQueryService.class);
 
     private final DeviceNotAliveRepository deviceNotAliveRepository;
+    private final UserService userService;
 
-    public DeviceNotAliveQueryService(DeviceNotAliveRepository deviceNotAliveRepository) {
+    public DeviceNotAliveQueryService(DeviceNotAliveRepository deviceNotAliveRepository, UserService userService) {
         this.deviceNotAliveRepository = deviceNotAliveRepository;
+        this.userService = userService;
     }
 
     /**
@@ -40,6 +42,7 @@ public class DeviceNotAliveQueryService extends QueryService<DeviceNotAlive> {
     @Transactional(readOnly = true)
     public List<DeviceNotAlive> findByCriteria(DeviceNotAliveCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
+        criteria.setUserId(userService.makeUserIdLongFilter());
         final Specification<DeviceNotAlive> specification = createSpecification(criteria);
         return deviceNotAliveRepository.findAll(specification);
     }
@@ -53,6 +56,7 @@ public class DeviceNotAliveQueryService extends QueryService<DeviceNotAlive> {
     @Transactional(readOnly = true)
     public Page<DeviceNotAlive> findByCriteria(DeviceNotAliveCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
+        criteria.setUserId(userService.makeUserIdLongFilter());
         final Specification<DeviceNotAlive> specification = createSpecification(criteria);
         return deviceNotAliveRepository.findAll(specification, page);
     }
@@ -65,6 +69,7 @@ public class DeviceNotAliveQueryService extends QueryService<DeviceNotAlive> {
     @Transactional(readOnly = true)
     public long countByCriteria(DeviceNotAliveCriteria criteria) {
         log.debug("count by criteria : {}", criteria);
+        criteria.setUserId(userService.makeUserIdLongFilter());
         final Specification<DeviceNotAlive> specification = createSpecification(criteria);
         return deviceNotAliveRepository.count(specification);
     }

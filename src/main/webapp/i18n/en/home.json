@@ -1,7 +1,7 @@
 {
   "home": {
-    "title": "Welcome, Java Hipster!",
-    "subtitle": "This is your homepage",
+    "title": "Welcome to AliveService",
+    "subtitle": "This is a private service!",
     "logged": {
       "message": "You are logged in as user \"{{username}}\"."
     },
@@ -14,6 +14,14 @@
       "follow": "follow @jhipster on Twitter"
     },
     "like": "If you like JHipster, don't forget to give us a star on",
-    "github": "GitHub"
+    "github": "GitHub",
+    "noDevice": "No Device Observed",
+    "noRegister": "No registration so far",
+    "noMessage": "No Report yet",
+    "status": {
+      "alive": "Active",
+      "warning": "Last report failed",
+      "error": "Device lost"
+    }
   }
 }

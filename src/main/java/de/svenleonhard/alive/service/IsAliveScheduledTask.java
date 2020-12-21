@@ -4,8 +4,10 @@ import de.svenleonhard.alive.domain.AliveMessage;
 import de.svenleonhard.alive.domain.DeviceNotAlive;
 import de.svenleonhard.alive.domain.User;
 import de.svenleonhard.alive.service.dto.AliveMessageCriteria;
+import de.svenleonhard.alive.service.dto.DeviceNotAliveCriteria;
 import de.svenleonhard.alive.service.impl.DeviceNotAliveServiceImpl;
 import de.svenleonhard.alive.service.impl.RegisterMessageServiceImpl;
+import io.github.jhipster.service.filter.BooleanFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import java.time.ZonedDateTime;
 import java.util.Comparator;
@@ -22,6 +24,7 @@ public class IsAliveScheduledTask {
     private final ObserveQueryService observeQueryService;
     private final AliveMessageQueryService aliveMessageQueryService;
     private final DeviceNotAliveServiceImpl deviceNotAliveService;
+    private final DeviceNotAliveQueryService deviceNotAliveQueryService;
     private final MailService mailService;
 
     private final int INTERVAL = 10;
@@ -30,11 +33,13 @@ public class IsAliveScheduledTask {
         ObserveQueryService observeQueryService,
         AliveMessageQueryService aliveMessageQueryService,
         DeviceNotAliveServiceImpl deviceNotAliveService,
+        DeviceNotAliveQueryService deviceNotAliveQueryService,
         MailService mailService
     ) {
         this.observeQueryService = observeQueryService;
         this.aliveMessageQueryService = aliveMessageQueryService;
         this.deviceNotAliveService = deviceNotAliveService;
+        this.deviceNotAliveQueryService = deviceNotAliveQueryService;
         this.mailService = mailService;
     }
 
@@ -58,11 +63,25 @@ public class IsAliveScheduledTask {
                             createDeviceNotAliveFor(observe.getUser());
                         }
                     } else {
-                        createDeviceNotAliveFor(observe.getUser());
-                        mailService.sendDeviceNotAliveMail(observe.getUser());
+                        if (!alreadyDetected(observe.getUser())) {
+                            createDeviceNotAliveFor(observe.getUser());
+                            mailService.sendDeviceNotAliveMail(observe.getUser());
+                        }
                     }
                 }
             );
+    }
+
+    public boolean alreadyDetected(User user) {
+        BooleanFilter booleanFilter = new BooleanFilter();
+        booleanFilter.setEquals(false);
+        DeviceNotAliveCriteria deviceNotAliveCriteria = new DeviceNotAliveCriteria();
+        deviceNotAliveCriteria.setConfirmed(booleanFilter);
+        LongFilter longFilter = new LongFilter();
+        longFilter.setEquals(user.getId());
+        deviceNotAliveCriteria.setUserId(longFilter);
+        List<DeviceNotAlive> deviceNotAliveList = deviceNotAliveQueryService.findByCriteria(deviceNotAliveCriteria);
+        return deviceNotAliveList.size() > 1;
     }
 
     public void createDeviceNotAliveFor(User user) {

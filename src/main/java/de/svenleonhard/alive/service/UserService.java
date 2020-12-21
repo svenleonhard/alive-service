@@ -1,5 +1,6 @@
 package de.svenleonhard.alive.service;
 
+import com.google.common.collect.Streams;
 import de.svenleonhard.alive.config.Constants;
 import de.svenleonhard.alive.domain.Authority;
 import de.svenleonhard.alive.domain.User;
@@ -9,6 +10,7 @@ import de.svenleonhard.alive.security.AuthoritiesConstants;
 import de.svenleonhard.alive.security.SecurityUtils;
 import de.svenleonhard.alive.service.dto.UserDTO;
 import io.github.jhipster.security.RandomUtil;
+import io.github.jhipster.service.filter.LongFilter;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -334,5 +336,14 @@ public class UserService {
         if (user.getEmail() != null) {
             Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE)).evict(user.getEmail());
         }
+    }
+
+    public LongFilter makeUserIdLongFilter() {
+        LongFilter longFilter = new LongFilter();
+        if (getUserWithAuthorities().isPresent()) {
+            longFilter.setEquals(getUserWithAuthorities().get().getId());
+            return longFilter;
+        }
+        return null;
     }
 }

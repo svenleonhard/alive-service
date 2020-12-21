@@ -5,6 +5,7 @@ import de.svenleonhard.alive.domain.Observe;
 import de.svenleonhard.alive.repository.ObserveRepository;
 import de.svenleonhard.alive.service.dto.ObserveCriteria;
 import io.github.jhipster.service.QueryService;
+import io.github.jhipster.service.filter.LongFilter;
 import java.util.List;
 import javax.persistence.criteria.JoinType;
 import org.slf4j.Logger;
@@ -27,9 +28,11 @@ public class ObserveQueryService extends QueryService<Observe> {
     private final Logger log = LoggerFactory.getLogger(ObserveQueryService.class);
 
     private final ObserveRepository observeRepository;
+    private final UserService userService;
 
-    public ObserveQueryService(ObserveRepository observeRepository) {
+    public ObserveQueryService(ObserveRepository observeRepository, UserService userService) {
         this.observeRepository = observeRepository;
+        this.userService = userService;
     }
 
     /**
@@ -40,6 +43,9 @@ public class ObserveQueryService extends QueryService<Observe> {
     @Transactional(readOnly = true)
     public List<Observe> findByCriteria(ObserveCriteria criteria) {
         log.debug("find by criteria : {}", criteria);
+        if (userService.makeUserIdLongFilter() != null) {
+            criteria.setUserId(userService.makeUserIdLongFilter());
+        }
         final Specification<Observe> specification = createSpecification(criteria);
         return observeRepository.findAll(specification);
     }
@@ -53,6 +59,7 @@ public class ObserveQueryService extends QueryService<Observe> {
     @Transactional(readOnly = true)
     public Page<Observe> findByCriteria(ObserveCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
+        criteria.setUserId(userService.makeUserIdLongFilter());
         final Specification<Observe> specification = createSpecification(criteria);
         return observeRepository.findAll(specification, page);
     }
@@ -65,6 +72,7 @@ public class ObserveQueryService extends QueryService<Observe> {
     @Transactional(readOnly = true)
     public long countByCriteria(ObserveCriteria criteria) {
         log.debug("count by criteria : {}", criteria);
+        criteria.setUserId(userService.makeUserIdLongFilter());
         final Specification<Observe> specification = createSpecification(criteria);
         return observeRepository.count(specification);
     }
