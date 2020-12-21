@@ -23,6 +23,8 @@ public class IsAliveScheduledTask {
     private final AliveMessageQueryService aliveMessageQueryService;
     private final DeviceNotAliveServiceImpl deviceNotAliveService;
 
+    private final int INTERVAL = 10;
+
     public IsAliveScheduledTask(
         ObserveQueryService observeQueryService,
         AliveMessageQueryService aliveMessageQueryService,
@@ -47,7 +49,9 @@ public class IsAliveScheduledTask {
                     List<AliveMessage> aliveMessageList = aliveMessageQueryService.findByCriteria(aliveMessageCriteria);
                     aliveMessageList.sort(Comparator.comparing(AliveMessage::getReceivetime).reversed());
                     if (aliveMessageList.stream().findFirst().isPresent()) {
-                        if (!aliveMessageList.stream().findFirst().get().getReceivetime().plusMinutes(20).isAfter(ZonedDateTime.now())) {
+                        if (
+                            !aliveMessageList.stream().findFirst().get().getReceivetime().plusMinutes(INTERVAL).isAfter(ZonedDateTime.now())
+                        ) {
                             createDeviceNotAliveFor(observe.getUser());
                         }
                     } else {

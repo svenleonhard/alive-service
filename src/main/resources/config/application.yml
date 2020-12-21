@@ -162,7 +162,7 @@ jhipster:
   #     allow-credentials: true
   #     max-age: 1800
   mail:
-    from: aliveService@localhost
+    from: noreply@7lofficial.de
   swagger:
     default-include-pattern: /api/.*
     title: aliveService API
