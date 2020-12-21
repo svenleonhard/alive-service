@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" lang="en">
+    <head>
+        <title th:text="#{email.activation.title}">JHipster activation</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+    </head>
+    <body>
+        <p th:text="#{email.alive.greeting}">
+            Dear user
+        </p>
+        <p th:text="#{email.alive.text1(${user.login})}">
+            your device has not reported for a long time. This may be due to a power failure or an Internet outage. Therefore, we recommend you to fix the problem and restart the sending device.
+        </p>
+        <p>
+            <span th:text="#{email.alive.text2}">Regards, </span>
+            <br/>
+            <em th:text="#{email.signature}">JHipster.</em>
+        </p>
+    </body>
+</html>

@@ -22,17 +22,20 @@ public class IsAliveScheduledTask {
     private final ObserveQueryService observeQueryService;
     private final AliveMessageQueryService aliveMessageQueryService;
     private final DeviceNotAliveServiceImpl deviceNotAliveService;
+    private final MailService mailService;
 
     private final int INTERVAL = 10;
 
     public IsAliveScheduledTask(
         ObserveQueryService observeQueryService,
         AliveMessageQueryService aliveMessageQueryService,
-        DeviceNotAliveServiceImpl deviceNotAliveService
+        DeviceNotAliveServiceImpl deviceNotAliveService,
+        MailService mailService
     ) {
         this.observeQueryService = observeQueryService;
         this.aliveMessageQueryService = aliveMessageQueryService;
         this.deviceNotAliveService = deviceNotAliveService;
+        this.mailService = mailService;
     }
 
     @Scheduled(cron = "1 * * * * * ")
@@ -56,6 +59,7 @@ public class IsAliveScheduledTask {
                         }
                     } else {
                         createDeviceNotAliveFor(observe.getUser());
+                        mailService.sendDeviceNotAliveMail(observe.getUser());
                     }
                 }
             );
