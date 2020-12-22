@@ -43,7 +43,7 @@ public class IsAliveScheduledTask {
         this.mailService = mailService;
     }
 
-    @Scheduled(cron = "3 * * * * * ")
+    @Scheduled(cron = "10 * * * * * ")
     public void checkIsAlive() {
         log.info("Check is alive");
         observeQueryService
@@ -60,12 +60,10 @@ public class IsAliveScheduledTask {
                         if (
                             !aliveMessageList.stream().findFirst().get().getReceivetime().plusMinutes(INTERVAL).isAfter(ZonedDateTime.now())
                         ) {
-                            createDeviceNotAliveFor(observe.getUser());
-                        }
-                    } else {
-                        if (!alreadyDetected(observe.getUser())) {
-                            createDeviceNotAliveFor(observe.getUser());
-                            mailService.sendDeviceNotAliveMail(observe.getUser());
+                            if (!alreadyDetected(observe.getUser())) {
+                                createDeviceNotAliveFor(observe.getUser());
+                                mailService.sendDeviceNotAliveMail(observe.getUser());
+                            }
                         }
                     }
                 }
