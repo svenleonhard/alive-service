@@ -75,7 +75,8 @@ public class AliveMessageResourceIT {
         AliveMessage aliveMessage = new AliveMessage()
             .sendtime(DEFAULT_SENDTIME)
             .receivetime(DEFAULT_RECEIVETIME)
-            .retrycount(DEFAULT_RETRYCOUNT);
+            .retrycount(DEFAULT_RETRYCOUNT)
+            .user(UserResourceIT.create());
         return aliveMessage;
     }
 
@@ -503,7 +504,7 @@ public class AliveMessageResourceIT {
 
     @Test
     @Transactional
-    public void getAllAliveMessagesByUserIsEqualToSomething() throws Exception {
+    public void getAllAliveMessagesByForeignUserExpectEmpty() throws Exception {
         // Initialize the database
         aliveMessageRepository.saveAndFlush(aliveMessage);
         User user = UserResourceIT.createEntity(em);
@@ -514,7 +515,7 @@ public class AliveMessageResourceIT {
         Long userId = user.getId();
 
         // Get all the aliveMessageList where user equals to userId
-        defaultAliveMessageShouldBeFound("userId.equals=" + userId);
+        defaultAliveMessageShouldNotBeFound("userId.equals=" + userId);
 
         // Get all the aliveMessageList where user equals to userId + 1
         defaultAliveMessageShouldNotBeFound("userId.equals=" + (userId + 1));

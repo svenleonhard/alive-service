@@ -67,7 +67,10 @@ public class DeviceNotAliveResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static DeviceNotAlive createEntity(EntityManager em) {
-        DeviceNotAlive deviceNotAlive = new DeviceNotAlive().occured(DEFAULT_OCCURED).confirmed(DEFAULT_CONFIRMED);
+        DeviceNotAlive deviceNotAlive = new DeviceNotAlive()
+            .occured(DEFAULT_OCCURED)
+            .confirmed(DEFAULT_CONFIRMED)
+            .user(UserResourceIT.create());
         return deviceNotAlive;
     }
 
@@ -349,7 +352,7 @@ public class DeviceNotAliveResourceIT {
         Long userId = user.getId();
 
         // Get all the deviceNotAliveList where user equals to userId
-        defaultDeviceNotAliveShouldBeFound("userId.equals=" + userId);
+        defaultDeviceNotAliveShouldNotBeFound("userId.equals=" + userId);
 
         // Get all the deviceNotAliveList where user equals to userId + 1
         defaultDeviceNotAliveShouldNotBeFound("userId.equals=" + (userId + 1));

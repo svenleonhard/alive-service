@@ -64,7 +64,7 @@ public class ObserveResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Observe createEntity(EntityManager em) {
-        Observe observe = new Observe().description(DEFAULT_DESCRIPTION).startdate(DEFAULT_STARTDATE);
+        Observe observe = new Observe().description(DEFAULT_DESCRIPTION).startdate(DEFAULT_STARTDATE).user(UserResourceIT.create());
         return observe;
     }
 
@@ -364,7 +364,7 @@ public class ObserveResourceIT {
         Long userId = user.getId();
 
         // Get all the observeList where user equals to userId
-        defaultObserveShouldBeFound("userId.equals=" + userId);
+        defaultObserveShouldNotBeFound("userId.equals=" + userId);
 
         // Get all the observeList where user equals to userId + 1
         defaultObserveShouldNotBeFound("userId.equals=" + (userId + 1));

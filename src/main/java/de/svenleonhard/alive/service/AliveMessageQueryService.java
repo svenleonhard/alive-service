@@ -3,9 +3,11 @@ package de.svenleonhard.alive.service;
 import de.svenleonhard.alive.domain.*; // for static metamodels
 import de.svenleonhard.alive.domain.AliveMessage;
 import de.svenleonhard.alive.repository.AliveMessageRepository;
+import de.svenleonhard.alive.security.AuthoritiesConstants;
 import de.svenleonhard.alive.service.dto.AliveMessageCriteria;
 import io.github.jhipster.service.QueryService;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.criteria.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,6 +58,7 @@ public class AliveMessageQueryService extends QueryService<AliveMessage> {
     @Transactional(readOnly = true)
     public Page<AliveMessage> findByCriteria(AliveMessageCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
+        User user = userService.getUserWithAuthorities().get();
         criteria.setUserId(userService.makeUserIdLongFilter());
         final Specification<AliveMessage> specification = createSpecification(criteria);
         return aliveMessageRepository.findAll(specification, page);

@@ -4,13 +4,10 @@ import { Subscription } from 'rxjs';
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
-import { TranslateService } from '@ngx-translate/core';
 import { ObserveService } from 'app/entities/observe/observe.service';
-import { Observe } from 'app/shared/model/observe.model';
 import { RegisterMessageService } from 'app/entities/register-message/register-message.service';
-import { stringify } from 'querystring';
-import { DeviceNotAliveService } from 'app/entities/device-not-alive/device-not-alive.service';
 import { AliveMessageService } from 'app/entities/alive-message/alive-message.service';
+import { DeviceNotAliveService } from 'app/entities/device-not-alive/device-not-alive.service';
 
 @Component({
   selector: 'jhi-home',
@@ -27,11 +24,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   lastReport = '';
   userId = -1;
   statusColorClass = 'text-warning';
+  statusTranslate = '';
 
   constructor(
     private accountService: AccountService,
     private loginModalService: LoginModalService,
-    private translateService: TranslateService,
     private observeService: ObserveService,
     private registerService: RegisterMessageService,
     private deviceNotAliveService: DeviceNotAliveService,
@@ -47,7 +44,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         if (observe.description) {
           this.device = observe.description;
         } else {
-          this.translateService.get('home.noDevice').subscribe(text => (this.device = text));
+          // this.translateService.get('home.noDevice').subscribe(text => (this.device = text));
         }
       }
     });
@@ -59,20 +56,23 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.registered = String(registerMessage.receivetime);
         }
       } else {
-        this.translateService.get('home.noRegister').subscribe(text => (this.registered = text));
+        // this.translateService.get('home.noRegister').subscribe(text => (this.registered = text));
       }
     });
 
     this.deviceNotAliveService.query().subscribe(res => {
       if (res.body && res.body.length === 0) {
-        this.translateService.get('home.status.alive').subscribe(text => (this.status = text));
+        // this.translateService.get('home.status.alive').subscribe(text => (this.status = text));
         this.statusColorClass = 'text-success';
+        this.statusTranslate = 'home.status.alive';
       } else if (res.body && res.body.length === 1) {
-        this.translateService.get('home.status.warning').subscribe(text => (this.status = text));
+        // this.translateService.get('home.status.warning').subscribe(text => (this.status = text));
+        this.statusTranslate = 'home.status.warning';
         this.statusColorClass = 'text-warning';
       } else {
-        this.translateService.get('home.status.error').subscribe(text => (this.status = text));
+        // this.translateService.get('home.status.error').subscribe(text => (this.status = text));
         this.statusColorClass = 'text-danger';
+        this.statusTranslate = 'home.status.error';
       }
     });
 
@@ -82,10 +82,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         if (lastAliveMessage) {
           this.lastReport = String(lastAliveMessage.receivetime);
         } else {
-          this.translateService.get('home.noMessage').subscribe(text => (this.status = text));
+          // this.translateService.get('home.noMessage').subscribe(text => (this.status = text));
         }
       } else {
-        this.translateService.get('home.noMessage').subscribe(text => (this.status = text));
+        // this.translateService.get('home.noMessage').subscribe(text => (this.status = text));
       }
     });
   }

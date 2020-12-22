@@ -75,7 +75,8 @@ public class RegisterMessageResourceIT {
         RegisterMessage registerMessage = new RegisterMessage()
             .sendtime(DEFAULT_SENDTIME)
             .receivetime(DEFAULT_RECEIVETIME)
-            .retrycount(DEFAULT_RETRYCOUNT);
+            .retrycount(DEFAULT_RETRYCOUNT)
+            .user(UserResourceIT.create());
         return registerMessage;
     }
 
@@ -518,7 +519,7 @@ public class RegisterMessageResourceIT {
         Long userId = user.getId();
 
         // Get all the registerMessageList where user equals to userId
-        defaultRegisterMessageShouldBeFound("userId.equals=" + userId);
+        defaultRegisterMessageShouldNotBeFound("userId.equals=" + userId);
 
         // Get all the registerMessageList where user equals to userId + 1
         defaultRegisterMessageShouldNotBeFound("userId.equals=" + (userId + 1));

@@ -43,7 +43,7 @@ public class IsAliveScheduledTask {
         this.mailService = mailService;
     }
 
-    @Scheduled(cron = "1 * * * * * ")
+    @Scheduled(cron = "3 * * * * * ")
     public void checkIsAlive() {
         log.info("Check is alive");
         observeQueryService
